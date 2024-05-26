@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block body %}
+
+<!-- bradcam_area  -->
+<div class="bradcam_area bradcam_bg_1">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="bradcam_text">
+                    <h3></h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--/ bradcam_area  -->
+
+<div class="apply_job_form white-bg">
+    <h1 class="text-center mb-4 section-heading border-bottom pb-2"> Registry for the Project </h1>
+    <form class="text-center mb-4 section-heading border-bottom pb-2" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{lg_frm}}
+        <input type="submit" value="save">
+    </form>
+</div>
+{% endblock body %}

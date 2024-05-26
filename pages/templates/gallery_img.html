@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block body %}
+
+<!-- bradcam_area  -->
+<div class="bradcam_area bradcam_bg_1">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="bradcam_text">
+                    <h3></h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--/ bradcam_area  -->
+
+<section class="container my-4">
+    <h1 class="text-center mb-4 section-heading border-bottom pb-2">
+        {{gallery.title}} Images</h1>
+    <div class="row">
+        {% for gimg in gallery_imgs_details %}
+        <div class="col-md-4 mb-4">
+            <div class="card" style="width: 18rem;">
+                <img style="max-width: 100%; max-height: 100%" src="{{gimg.img.url}}" class="card-img-top"
+                    alt="{{gimg.alt_text}}">
+                <div class="card-body">
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock body %}

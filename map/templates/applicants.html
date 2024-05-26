@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% block body %}
+{% include 'status.html' %}
+
+<!-- bradcam_area  -->
+<div class="bradcam_area bradcam_bg_1">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="bradcam_text">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--/ bradcam_area  -->
+
+<div class="row">
+    <div class="col-md-5">
+        <h5> Applicants </h5>
+        <div class="card card-body">
+            <a class="btn btn-primary btn-sm btn-block" href=""></a>
+        </div>
+        <div class="card card-body">
+            <table class="table table-sm">
+                <tr>
+                    <th> Name</th>
+                    <th> Nation</th>
+                    <th>Project No</th>
+
+
+                </tr>
+                {% for applicant in applicants %}
+                <tr>
+                    <td><a class="btn btn-sm btn-info" href="{% url 'prj' applicant.project.id %}">View</a></td>
+                    <td>{{applicant.person}} </td>
+                    <td>{{applicant.nation}} </td>
+                    <td>{{applicant.project}} </td>
+
+
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+
+    <div class="col-md-7">
+        <h5> Investors </h5>
+        <div class="card card-body">
+            <a class="btn btn-primary btn-sm btn-block" href=""></a>
+        </div>
+        <table class="table table-sm">
+            <tr>
+                <th>Investor No</th>
+                <th>Investor Name</th>
+                <th> Nation </th>
+            </tr>
+            {% for investor in investors %}
+            <tr>
+                <td><a class="btn btn-sm btn-info" href="{% url 'prj' investor.project.id %}">View</a></td>
+                <td>{{investor.name}} </td>
+                <td>{{investor.nation}} </td>
+                <td>{{investor.project}} </td>
+
+                <td><a class="btn btn-outline-info btn-sm btn-block" href="">Update</a></td>
+                <td><a class="btn btn-outline-danger btn-sm btn-block" href="">Delete</a></td>
+
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+</div>
+{% endblock body %}

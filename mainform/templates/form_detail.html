@@ -56,19 +56,17 @@
                     </div>
                 </div>
                 <div class="apply_job_form white-bg">
-                    <h4>Registry for the Project</h4>
                     <form method="POST" enctype="multipart/form-data">
                         {% csrf_token %}
                         {% bootstrap_form form_rgst %}
                         {%buttons%}
                         <button class="boxed-btn3 w-100" type="submit">Apply Now</button>
                         {% endbuttons %}
-
                         {% bootstrap_button button_type="submit" content="OK" %}
                         {% bootstrap_button button_type="reset" content="Cancel" %}
-
                     </form>
                 </div>
+
             </div>
             <div class="col-lg-4">
                 <div class="job_sumary">
@@ -128,4 +126,5 @@
         </div>
     </div>
 </div>
+
 {% endblock body %}

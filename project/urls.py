@@ -18,12 +18,27 @@ from django.contrib import admin
 from django.conf.urls.static import static
 from django.conf import settings
 from django.urls import path, include
+from app.views import indx
+from map import views as map_view
+
 
 
 urlpatterns = [
+    path('', include('map.urls')), #map/
+    path('pages/', include('pages.urls')), #,namespace='about'  pages/
+    path('regist/', indx, name='regist'),
+    #path('grappelli/', include('grappelli.urls')),
     path('admin/', admin.site.urls),
     path('mainform/', include('mainform.urls',namespace='frmu')),
+    path('products/', include('products.urls')),
+
+    #path('map/', map_view.mp_index, name='map'),
+
+    #path('default/', include('app.urls')),
+    
 ]
+#www.mysite.com/'' will open main root
+#www.mysite.com/pages will open pages
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

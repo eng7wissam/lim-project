@@ -15,7 +15,7 @@ from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
+#BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
@@ -32,18 +32,33 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+  #  'grappelli',
+  #  'mainform.apps.SuitConfig',
+    'products.apps.ProductsConfig',
+    'map.apps.MapConfig',
+    'django.contrib.gis',
+    'pages.apps.PagesConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
+    'crispy_forms',
+    'crispy_bootstrap5',
+    'mapwidgets',
+    'leaflet',
+    #'geojosn',
     'job',
+    'app',
     'mainform',
     'bootstrap4',
     'django_bootstrap5',
 ]
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+
+CRISPY_TEMPLATE_PACK = "bootstrap5"
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -56,11 +71,11 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'project.urls'
-
+# OR [os.path.join(BASE_DIR, 'templates')]
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['templates'],
+        'DIRS': ['templates'], #BASE_DIR / 'templates'
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -72,19 +87,25 @@ TEMPLATES = [
         },
     },
 ]
-
 WSGI_APPLICATION = 'project.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
-
+    #    'ENGINE': 'django.db.backends.sqlite3',
+    #   'NAME': BASE_DIR / 'db.sqlite3',
+    # django.db.backends.postgresql # django.contrib.gis.db.backends.postgis
+    
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        'NAME': 'lim',
+        'USER': 'admin',
+        'PASSWORD': 'Admin@PIB123',
+        'HOST': '127.0.0.1',
+        'PORT': '2453',
     }
 }
+#POSTGIS_VERSION = (2, 4, 3)
 
 
 # Password validation
@@ -105,6 +126,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+#CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
@@ -142,3 +164,43 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+DATE_INPUT_FORMATS = ('%d/%m/%Y','%d-%m-%Y','%d-%m-%Y')
+
+#GDAL_LIBRARY_PATH = '/opt/homebrew/opt/gdal/lib/libgdal.dylib'
+#GEOS_LIBRARY_PATH = '/opt/homebrew/opt/geos/lib/libgeos_c.dylib' 
+
+PROJ_LIBRARY_PATH =r'C:\Program Files\QGIS 3.12\bin\o4w_env'
+GDAL_LIBRARY_PATH =r'C:\Program Files\QGIS 3.12\bin\gdal204'
+GEOS_LIBRARY_PATH =r'C:\Program Files\QGIS 3.12\bin\geos_c.dll'
+PROJ_LIBRARY_PATH =r'C:\Program Files\QGIS 3.12\bin\proj'
+
+os.environ['QGIS_PREFIX'] = 'C:/OSGeo4W64/apps/qgis'
+#os.environ['GDAL_DATA'] = 'C:/OSGeo4W64/share/gdal'
+
+STATICFILES_DIRS=(
+    os.path.join(BASE_DIR, 'static'),
+)
+
+LEAFLET_CONFIG ={
+    'DEFAULT_CENTER':(27.060677, 17.380922),#26.133567, 17.549336
+    'DEFAULT_ZOOM' :6,
+    'radius': 8,
+    'MAX_ZOOM' : 20,
+    'MIN_ZOOM' : 3,
+    'RESET_VIEW': False,
+    'NO_GLOBALS': False,
+    'SCALE' : 'both',  # 'imperial'
+    'ATTRIBUTION_PREFIX' : 'Insprired by Life in GIS'
+}
+
+MAP_WIDGETS = {
+    "GooglePointFieldWidget": (
+        ("zoom", 15),
+        ("mapCenterLocationName", "tripoli"),
+        ("GooglePlaceAutocompleteOptions", {'componentRestrictions': {'country': 'libya'}}),
+        ("markerFitZoom", 12),
+        ("scrollWheel", True),
+        ("streetViewControl", True),
+    ),
+    "GOOGLE_MAP_API_KEY": "<AIzaSyDV_f1ECz8NFDVSzoqopavdi1A6u9hom60>" #'AIzaSyApdnBLqJeVW4c5t1Z32v88zVBVWyJnY1g'
+}

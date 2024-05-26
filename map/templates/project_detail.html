@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+{% block body %}
+<!-- bradcam_area  -->
+<div class="bradcam_area bradcam_bg_1">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="bradcam_text">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--/ bradcam_area  -->
+
+<br>
+<div class="row">
+    <div class="col-md">
+        <div class="card card-body">
+            <h5> Projects </h5>
+            <hr>
+            <a class="btn btn-outline-info btn-sm btn-block" href="">Update Project</a>
+            <a class="btn btn-outline-danger btn-sm btn-block" href="">Delete Project</a>
+        </div>
+    </div>
+    <div class="col-md">
+        <div class="card card-body">
+            <h5> Applicants </h5>
+            <hr>
+            <p>Project Name : {{prjcts.proj_name}}</p>
+            <p> Field : {{prjcts.area}}</p>
+
+        </div>
+    </div>
+    <div class="col-md">
+        <div class="card card-body">
+            <h5> Location </h5>
+            <hr>
+            <p>Region : {{prjcts.region}}</p>
+            <p>City : {{prjcts.location}}</p>
+
+        </div>
+    </div>
+
+    <div class="col-md">
+        <div class="card card-body">
+            <h5>Total Investors </h5>
+            <hr>
+            <h1 style="text-align: center;padding: 10px">{{total_investors}}</h1>
+
+            {% for appl in applicants %}
+
+            <tr>
+                <th>{{appl.person}} </th>
+                <th> {{appl.nation}}</th>
+                <th>{{appl.email}} </th>
+            </tr>
+            {% endfor %}
+
+        </div>
+    </div>
+
+</div>
+<div class="row">
+    <div class="col">
+        <div class="card card-body">
+            <form method="GET">
+                <button class="btn btn-primary" type="submit">Search</button>
+            </form>
+        </div>
+
+    </div>
+
+
+</div>
+
+<div class="row">
+    <div class="col-md">
+        <div class="card card-body">
+            <table class="table table-sm">
+                <tr>
+                    <th>Project Name</th>
+                    <th> Area </th>
+                    <th>Region</th>
+                </tr>
+
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-md">
+        <div class="card card-body">
+            <table class="table table-sm">
+                <tr>
+                    <th></th>
+                    <th>Investor Name</th>
+                    <th> Nationality </th>
+                    <th>Investor Email</th>
+                    <th>Invest Cost</th>
+                </tr>
+
+                {% for invstrs in investors %}
+
+                <tr>
+                    <td><a class="btn btn-sm btn-info" href="{% url 'prj' invstrs.project.id %}">View</a></td>
+
+                    <td>{{invstrs.name}} </td>
+                    <td> {{invstrs.nation}}</td>
+                    <td>{{invstrs.email}} </td>
+                    <td>{{invstrs.invest_cost}} </td>
+                    <td><a class="btn btn-outline-info btn-sm btn-block"
+                            href="{% url 'update_investor' invstrs.id %}">Update</a></td>
+                    <td><a class="btn btn-outline-danger btn-sm btn-block"
+                            href="{% url 'delete_investor' invstrs.id %}">Delete</a></td>
+
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
+
+<!--/ bradcam_area  -->
+
+{% endblock body %}

@@ -17,7 +17,6 @@ def forms_all(request):
 
 def form_detail(request, id):
     form_detail = mainform.objects.get(id=id)
-
     if request.method=='POST':
         form = RegistryForm(request.POST, request.FILES)
         if form.is_valid():
@@ -40,4 +39,5 @@ def add_project(request):
     else:
         form = ProjectForm()
     return render(request,'add_project.html',{'form_r':form})
+    
 

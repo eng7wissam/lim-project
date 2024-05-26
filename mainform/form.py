@@ -1,6 +1,7 @@
 from django import forms
 from .models import mainform, get_opportunnity
 
+
 class RegistryForm(forms.ModelForm):
     class Meta:
         model = get_opportunnity

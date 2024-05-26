@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block body %}
+
+<div id="map" style="height: 500px; width: 100px;">
+    <h1 class="text-center mb-4 section-heading border-bottom pb-2"> Map Of Project </h1>
+
+</div>
+{{ Cities_Ly|json_script:"Cities_Ly-json" }}
+
+{% endblock body %}
+{% block script %}
+<script>
+    document.addEventListener('DOMContentloaded', () => {
+        let map = createMap([45.5, -90], 5);
+        let cities_Ly = JSON.parse(document.getElementById('cities_Ly-json').textContent)
+        <!---->
+        let overlayMaps = {}
+        for (let city of cities_Ly) {
+            let cityFeatureGroup = L.featureGroup().addTo(map)
+            L.marker([city.latitude, city.longitude]).addTo(cityFeatureGroup);
+            overlayMaps['City ${city.id}'] = cityFeatureGroup;
+        }
+        var layerControl = L.control.layers(null, overlayMaps).addTo(map);
+        //setInterval(() => updateMarkers(markerFeatureGroup), 5000)
+    });
+</script>
+{% endblock script %}

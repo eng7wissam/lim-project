@@ -1,0 +1,214 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+{% load bootstrap4 %}
+{% block body %}
+<style type="text/css">
+    #gis {
+        width: 100%;
+        height: 500px;
+    }
+
+    .anybutton {
+        top: 11%;
+        left: 55%;
+        width: 100px;
+        height: 40px;
+        position: absolute;
+        z-index: 2;
+        background: orange;
+    }
+
+    .container {
+        border: 1px solid #ccc;
+        text-align: right;
+        width: 80%;
+        padding-right: 20px;
+    }
+</style>
+
+<!-- bradcam_area  -->
+<div class="bradcam_area bradcam_bg_1">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="bradcam_text">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--/ bradcam_area  -->
+
+<div id="map" style="height: 50px; width: 600px;">
+    <h1 class="text-center mb-8 section-heading border-bottom pb-2">Libya investment Map </h1>
+
+</div>
+
+<div class="job_details_area">
+    <div class="container">
+        {% if object %}
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="apply_job_form white-bg">
+                    <form method="GET" action="/prj/" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="d-flex">
+                            <input class="form-control" type="text" placeholder="Search" name="q" aria-label="Search">
+                            <button class="btn btn-outline-secondary ml-auto" type="submit">Search</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-lg-8">
+                <div class="job_details_header">
+                    <div class="single_jobs white-bg d-flex justify-content-between">
+                        <div class="jobs_left d-flex align-items-center">
+                            <div class="thumb">
+                                <img src="img/svg_icon/1.svg" alt="">
+                            </div>
+                            <div class="jobs_conetent">
+                                <a href="#">
+                                </a>
+                                <div class="links_locat d-flex align-items-center">
+                                    <div class="location">
+                                        <p> <i class="fa fa-map-marker"></i>{{object.proj_name}}</p>
+                                    </div>
+                                    <div class="location">
+                                        <p> <i class="fa fa-clock-o"></i>{{ object.region}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="job_sumary">
+                    <div class="job_content">
+                        <h3>Summery</h3>
+                        <ul>
+                            <li>Project No : <span>{{object.proj_no}}</span></li>
+                            <li>Registred on: <span>{{object.regist_date|date:'o-m-d'}}</span></li>
+                            <li>City: <span>{{object.city}}</span></li>
+                            <li>Field: <span>{{object.field}}</span></li>
+                            <li>Location: <span>{{object.location}}</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+
+<!-- script_area  -->
+{% block script %}
+<script type="text/javascript">
+    function out_layers(map, options) {
+        var osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '© OpenStreetMap'
+        });
+
+        var osmHOT = L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '© OpenStreetMap contributors, Tiles style by Humanitarian OpenStreetMap Team hosted by OpenStreetMap France'
+        });
+        var openTopoMap = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: 'Map data: © OpenStreetMap contributors, SRTM | Map style: © OpenTopoMap (CC-BY-SA)'
+        });
+
+        var googleSat = L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
+            maxZoom: 20,
+            subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
+        });
+        // googleSat.addTo(pibMap);
+
+        var googleHybrid = L.tileLayer('http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}', {
+            maxZoom: 20,
+            subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
+        });
+
+        var datasets = new L.GeoJSON.AJAX("{% url 'city' %}", {
+            style: function colors(feature) {
+                switch (feature.properties.pk) {
+                    case '14':
+                        return {
+                            radius: 8,
+                            fillColor: 'blue',
+                            weight: 2,
+                            opacity: 1,
+                            color: 'orange',
+                            fillOpacity: 0.7
+                        };
+                        break;
+                    case '2':
+                        return {
+                            fillColor: '#285078',
+                            weight: 2,
+                            opacity: 1,
+                            color: 'orange',
+                            fillOpacity: 0.7
+                        };
+                        break;
+                    case '3':
+                        return {
+                            fillColor: '#a0c8f0',
+                            weight: 2,
+                            opacity: 1,
+                            color: 'orange',
+                            fillOpacity: 0.7
+                        };
+                        break;
+                    case '4':
+                        return {
+                            fillColor: '#FCF3CF ',
+                            weight: 2,
+                            opacity: 1,
+                            color: 'orange',
+                            fillOpacity: 0.7
+                        };
+                        break;
+                }
+            },
+            onEachFeature: function (feature, layer) {
+                layer.bindPopup(feature.properties.name_ar.toString());
+            }
+        });
+
+        var points = new L.GeoJSON.AJAX("{% url 'projects' %}", {
+            onEachFeature: function (feature, layer) {
+                layer.bindPopup(feature.properties.project_na.toString());
+            }
+        });
+
+        datasets.addTo(map);
+        points.addTo(map);
+
+        var baseMaps = {
+            "OpenStreetMap": osm,
+            "OpenStreetMap.HOT": osmHOT,
+            "openTopoMap": openTopoMap,
+            "Satallite": googleSat,
+            "googleHybrid": googleHybrid,
+
+        };
+
+        var overlayMaps = {
+            "region": datasets,
+            "project_na": points,
+        };
+        var layerControl = L.control.layers(baseMaps, overlayMaps).addTo(map);
+    }
+</script>
+
+{% endblock script %}
+
+
+<!--/ script_area  -->
+
+
+{% endblock body %}

@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block body %}
+
+<!-- bradcam_area  -->
+<div class="bradcam_area bradcam_bg_1">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="bradcam_text">
+                    <h3></h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--/ bradcam_area  -->
+
+<!--
+    |default:'Not Found'
+    |slice:'5:10'
+    |length
+    |add:'Shaaroun'
+    cut:' '
+name = {{name|capfirst}} 
+are = {{age}}
+-->
+
+<h1> Text</h1>
+name = {{name|cut:' '}}
+age={{age|filesizeformat}}
+<h4>Text 2</h4>
+{% endblock body %}

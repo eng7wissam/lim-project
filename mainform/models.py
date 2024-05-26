@@ -9,20 +9,25 @@ area = (
     ('Tourism','Tourism'),
 )
 
+def image_upload(instance, filename):
+    imagename , extension = filename.split(".")
+    return "imgs/%s.%s"%(instance.id,extension)
+
 class type_activity(models.Model):
     name = models.CharField(max_length=25)
 
     def __str__(self):
         return self.name
 
-def image_upload(instance, filename):
-    imagename , extension = filename.split(".")
-    return "imgs/%s.%s"%(instance.id,extension)
-
 class mainform(models.Model): # Table
+    #today = datetime.date.today()
+    #year = models.objects.filter(date__year = today.year)
+    #year = models.DateField(input_formats=DATE_INPUT_FORMATS)
+
     owner = models.ForeignKey(User, related_name='projcet_owner', on_delete=models.CASCADE)
     project_name = models.CharField(max_length=130) # Column
     area = models.CharField(max_length=25,choices=area)
+    type_activity = models.ForeignKey('type_activity',on_delete=models.CASCADE)
     location = models.CharField(max_length=26)
     regist_date = models.DateField(auto_now=False)
     description = models.TextField(max_length=200)
@@ -34,7 +39,6 @@ class mainform(models.Model): # Table
     phone2 = models.CharField(max_length=16)
     address = models.CharField(max_length=26)
     email = models.EmailField(max_length=25)
-    type_activity = models.ForeignKey('type_activity',on_delete=models.CASCADE)
     image = models.ImageField(upload_to=image_upload)
     slug = models.SlugField(blank=True, null=True)
 

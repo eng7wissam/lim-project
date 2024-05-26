@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block body%}
+
+<!-- bradcam_area  -->
+<div class="bradcam_area bradcam_bg_1">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-12">
+            </div>
+        </div>
+    </div>
+</div>
+<!--/ bradcam_area  -->
+<!-- bradcam_area  -->
+<div class="container">
+    <div class="row">
+        <div class="col-xl-12">
+            <a class="navbar-brand" href="{% url 'map' %}">Geo Tec</a>
+            <form class="form-inline my-2 my-lg-0 pull-right" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form }}
+                <button class="btn btn-outline-success my-2 my-sm-0 mx-2 pull-right" type="submit">Search</button>
+            </form>
+        </div>
+    </div>
+</div>
+<!--/ bradcam_area  -->
+
+
+<div class="apply_job_form blue-bg">
+    <!--<h1 class="text-center mb-4 section-heading border-bottom pb-2"> Map View</h1> -->
+    <div class="col-md-10 offset-md-1">
+        {{map|safe}}
+    </div>
+</div>
+{% endblock body %}

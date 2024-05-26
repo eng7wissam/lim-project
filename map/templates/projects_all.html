@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+{% block body %}
+
+
+
+<div class="row">
+    <div class="col">
+        <div class="col-md">
+            <div class="card text-center text-white mb-3" id="total-projects">
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <div class="col">
+        <div class="col-md-12">
+
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Projects</h5>
+                    <!-- Table Variants -->
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Project Name</th>
+                                <th scope="col">Field</th>
+                                <th scope="col">Region</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for i in projects %}
+                            <tr class="table-primary">
+                                <th>{{i.proj_name}} </th>
+                            </tr>
+                            <tr class="table-secondary">
+                                <th> {{i.field}}</th>
+                            </tr>
+                            <tr class="table-success">
+                                <th>{{i.region_id}} </th>
+                            </tr>
+                            {% endfor %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <tr>
+        <th scope="row">Default</th>
+        <td>Cell</td>
+        <td>Cell</td>
+    </tr>
+
+    <tr class="table-primary">
+        <th scope="row">Primary</th>
+        <td>Cell</td>
+        <td>Cell</td>
+    </tr>
+    <tr class="table-secondary">
+        <th scope="row">Secondary</th>
+        <td>Cell</td>
+        <td>Cell</td>
+    </tr>
+    <tr class="table-success">
+        <th scope="row">Success</th>
+        <td>Cell</td>
+        <td>Cell</td>
+    </tr>
+    <tr class="table-danger">
+        <th scope="row">Danger</th>
+        <td>Cell</td>
+        <td>Cell</td>
+    </tr>
+    <tr class="table-warning">
+        <th scope="row">Warning</th>
+        <td>Cell</td>
+        <td>Cell</td>
+    </tr>
+    <tr class="table-info">
+        <th scope="row">Info</th>
+        <td>Cell</td>
+        <td>Cell</td>
+    </tr>
+    <tr class="table-light">
+        <th scope="row">Light</th>
+        <td>Cell</td>
+        <td>Cell</td>
+    </tr>
+    <tr class="table-dark">
+        <th scope="row">Dark</th>
+        <td>Cell</td>
+        <td>Cell</td>
+    </tr>
+    </tbody>
+    </table>
+    <!-- End Table Variants -->
+
+</div>
+
+
+
+<div class="row">
+    <div class="col-md">
+        <div class="card card-body">
+            <h5> Projects </h5>
+        </div>
+        <div class="card card-body">
+            <table class="table">
+                <tr>
+                    <th>Project No</th>
+                    <th>Project Name</th>
+                    <th> Field </th>
+                    <th>Region</th>
+                </tr>
+                {% for i in projects %}
+                <tr>
+                    <th>{{i.id}} </th>
+                    <th>{{i.proj_name}} </th>
+                    <th> {{i.field}}</th>
+                    <th>{{i.region_id}} </th>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock body %}

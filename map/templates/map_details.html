@@ -1,0 +1,246 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+{% load bootstrap4 %}
+{% block body %}
+<style type="text/css">
+    #gis {
+        width: 80%;
+        height: 500px;
+    }
+</style>
+<!-- bradcam_area  -->
+<div class="bradcam_area bradcam_bg_1">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="bradcam_text">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--/ bradcam_area  -->
+
+<div id="map" style="height: 50px; width: 600px;">
+    <h1 class="text-center mb-8 section-heading border-bottom pb-2">Libya investment Map </h1>
+    <h3>{{viewMap}}</h3>
+
+</div>
+
+<div class="job_details_area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="job_details_header">
+                    <div class="single_jobs white-bg d-flex justify-content-between">
+                        <div class="jobs_left d-flex align-items-center">
+                            <div class="thumb">
+                                <img src="img/svg_icon/1.svg" alt="">
+                            </div>
+                            <div class="jobs_conetent">
+                                <a href="#">
+                                    <h4>{{viewMap}}</h4>
+                                </a>
+                                <div class="links_locat d-flex align-items-center">
+                                    <div class="location">
+                                        <p> <i class="fa fa-map-marker"></i>{{viewMap.name}}</p>
+                                    </div>
+                                    <div class="location">
+                                        <p> <i class="fa fa-clock-o"></i>{{viewMap.type}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="jobs_right">
+                            <div class="apply_now">
+                                <a class="heart_mark" href="#"> <i class="ti-heart"></i> </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="descript_wrap white-bg">
+                    <div class="single_wrap">
+                        <h4>Job description</h4>
+                        <p>{{viewMap.name_of}}</p>
+                    </div>
+                </div>
+                <div class="apply_job_form white-bg">
+                    <form method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+
+                    </form>
+                </div>
+
+            </div>
+            <div class="col-lg-4">
+                <div class="job_sumary">
+                    <div class="summery_header">
+                        <h3>Job Summery</h3>
+                    </div>
+                    <div class="job_content">
+                        <ul>
+                            <li>Registred on: <span>{{frm.regist_date|date:'o-m-d'}}</span></li>
+                            <li>Phone Number: <span>{{frm.phone1}}</span></li>
+                            <li>Phone Number: <span>{{frm.phone2}}</span></li>
+                            <li>Location: <span>{{frm.location}}</span></li>
+                            <li>Email: <span>{{frm.email}}</span></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="share_wrap d-flex">
+                    <span>Share at:</span>
+                    <ul>
+                        <li><a href="#"> <i class="fa fa-facebook"></i></a> </li>
+                        <li><a href="#"> <i class="fa fa-google-plus"></i></a> </li>
+                        <li><a href="#"> <i class="fa fa-twitter"></i></a> </li>
+                        <li><a href="#"> <i class="fa fa-envelope"></i></a> </li>
+                    </ul>
+                </div>
+                <div class="job_location_wrap">
+                    <div class="job_lok_inner">
+                        <div id="map" style="height: 200px;"></div>
+                        <script>
+                            function initMap() {
+                                var uluru = { lat: -25.363, lng: 131.044 };
+                                var grayStyles = [
+                                    {
+                                        featureType: "all",
+                                        stylers: [
+                                            { saturation: -90 },
+                                            { lightness: 50 }
+                                        ]
+                                    },
+                                    { elementType: 'labels.text.fill', stylers: [{ color: '#ccdee9' }] }
+                                ];
+                                var map = new google.maps.Map(document.getElementById('map'), {
+                                    center: { lat: -31.197, lng: 150.744 },
+                                    zoom: 9,
+                                    styles: grayStyles,
+                                    scrollwheel: false
+                                });
+                            }
+
+                        </script>
+                        <script
+                            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDpfS1oRGreGSBU5HHjMmQ3o5NLw7VdJ6I&callback=initMap"></script>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- script_area  -->
+{% block script %}
+<div id="map" style="height: 50px; width: 600px;">
+    <script type="text/javascript">
+        function out_layers(map, options) {
+            var osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+                attribution: '© OpenStreetMap'
+            });
+
+            var osmHOT = L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+                attribution: '© OpenStreetMap contributors, Tiles style by Humanitarian OpenStreetMap Team hosted by OpenStreetMap France'
+            });
+            var openTopoMap = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+                attribution: 'Map data: © OpenStreetMap contributors, SRTM | Map style: © OpenTopoMap (CC-BY-SA)'
+            });
+
+            var googleSat = L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
+                maxZoom: 20,
+                subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
+            });
+            // googleSat.addTo(pibMap);
+
+            var googleHybrid = L.tileLayer('http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}', {
+                maxZoom: 20,
+                subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
+            });
+
+            var datasets = new L.GeoJSON.AJAX("{% url 'city' %}", {
+                style: function colors(feature) {
+                    switch (feature.properties.pk) {
+                        case '1':
+                            return {
+                                radius: 8,
+                                fillColor: 'blue',
+                                weight: 2,
+                                opacity: 1,
+                                color: 'orange',
+                                fillOpacity: 0.7
+                            };
+                            break;
+                        case '2':
+                            return {
+                                fillColor: '#285078',
+                                weight: 2,
+                                opacity: 1,
+                                color: 'orange',
+                                fillOpacity: 0.7
+                            };
+                            break;
+                        case '3':
+                            return {
+                                fillColor: '#a0c8f0',
+                                weight: 2,
+                                opacity: 1,
+                                color: 'orange',
+                                fillOpacity: 0.7
+                            };
+                            break;
+                        case '4':
+                            return {
+                                fillColor: '#FCF3CF ',
+                                weight: 2,
+                                opacity: 1,
+                                color: 'orange',
+                                fillOpacity: 0.7
+                            };
+                            break;
+                    }
+                },
+                onEachFeature: function (feature, layer) {
+                    layer.bindPopup(feature.properties.name_ar.toString());
+                }
+            });
+
+            var points = new L.GeoJSON.AJAX("{% url 'projects' %}", {
+                onEachFeature: function (feature, layer) {
+                    layer.bindPopup(feature.properties.project_na.toString());
+                }
+            });
+
+            datasets.addTo(map);
+            points.addTo(map);
+
+            var baseMaps = {
+                "OpenStreetMap": osm,
+                "OpenStreetMap.HOT": osmHOT,
+                "openTopoMap": openTopoMap,
+                "Satallite": googleSat,
+                "googleHybrid": googleHybrid,
+
+            };
+
+            var overlayMaps = {
+                "region": datasets,
+                "project_na": points,
+            };
+            var layerControl = L.control.layers(baseMaps, overlayMaps).addTo(map);
+        }
+    </script>
+</div>
+
+{% endblock script %}
+
+
+<!--/ script_area  -->
+
+
+{% endblock body %}

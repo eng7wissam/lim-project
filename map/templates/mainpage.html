@@ -1,0 +1,631 @@
+{% extends 'base.html' %}
+{% block body %}
+
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>Dashboard</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">Home</a></li>
+                <li class="breadcrumb-item active">Dashboard</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section dashboard">
+        <div class="row">
+
+            <!-- Left side columns -->
+            <div class="col-lg-8">
+                <div class="row">
+
+                    <!-- Sales Card -->
+                    <div class="col-xxl-4 col-md-6">
+                        <div class="card info-card sales-card">
+
+                            <div class="filter">
+                                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                    <li class="dropdown-header text-start">
+                                        <h6>Filter</h6>
+                                    </li>
+
+                                    <li><a class="dropdown-item" href="#">Today</a></li>
+                                    <li><a class="dropdown-item" href="#">This Month</a></li>
+                                    <li><a class="dropdown-item" href="#">This Year</a></li>
+                                </ul>
+                            </div>
+
+                            <div class="card-body">
+                                <h5 class="card-title">Total Projects <span>|</span></h5>
+
+                                <div class="d-flex align-items-center">
+                                    <div
+                                        class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                        <i class="bi bi-cart"></i>
+                                    </div>
+                                    <div class="ps-3">
+                                        <h6>{{total_proj}}</h6>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div><!-- End Sales Card -->
+
+                    <!-- Revenue Card -->
+                    <div class="col-xxl-4 col-md-6">
+                        <div class="card info-card revenue-card">
+
+                            <div class="filter">
+                                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                    <li class="dropdown-header text-start">
+                                        <h6>Filter</h6>
+                                    </li>
+
+                                    <li><a class="dropdown-item" href="#">Today</a></li>
+                                    <li><a class="dropdown-item" href="#">This Month</a></li>
+                                    <li><a class="dropdown-item" href="#">This Year</a></li>
+                                </ul>
+                            </div>
+
+                            <div class="card-body">
+                                <h5 class="card-title">Total Applicants <span>|</span></h5>
+
+                                <div class="d-flex align-items-center">
+                                    <div
+                                        class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                        <i class="bi bi-people"></i>
+
+                                    </div>
+                                    <div class="ps-3">
+                                        <h6>{{total_app}}</h6>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div><!-- End Revenue Card -->
+
+                    <!-- Customers Card -->
+                    <div class="col-xxl-4 col-xl-12">
+
+                        <div class="card info-card customers-card">
+
+                            <div class="filter">
+                                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                    <li class="dropdown-header text-start">
+                                        <h6>Filter</h6>
+                                    </li>
+
+                                    <li><a class="dropdown-item" href="#">Today</a></li>
+                                    <li><a class="dropdown-item" href="#">This Month</a></li>
+                                    <li><a class="dropdown-item" href="#">This Year</a></li>
+                                </ul>
+                            </div>
+
+                            <div class="card-body">
+                                <h5 class="card-title">Total Investors <span>|</span></h5>
+
+                                <div class="d-flex align-items-center">
+                                    <div
+                                        class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                        <i class="bi bi-people"></i>
+                                    </div>
+                                    <div class="ps-3">
+                                        <h6>{{total_investors}}</h6>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div><!-- End Customers Card -->
+
+                    <!-- Reports -->
+                    <div class="col-12">
+                        <div class="card">
+
+                            <div class="filter">
+                                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                    <li class="dropdown-header text-start">
+                                        <h6>Filter</h6>
+                                    </li>
+
+                                    <li><a class="dropdown-item" href="#">Today</a></li>
+                                    <li><a class="dropdown-item" href="#">This Month</a></li>
+                                    <li><a class="dropdown-item" href="#">This Year</a></li>
+                                </ul>
+                            </div>
+
+                            <div class="card-body">
+                                <h5 class="card-title">Reports <span>/Today</span>
+                                    {{ map|safe}}
+                                </h5>
+
+                                <!-- Line Chart -->
+                                <div id="reportsChart"></div>
+
+                                <script>
+                                    document.addEventListener("DOMContentLoaded", () => {
+                                        new ApexCharts(document.querySelector("#reportsChart"), {
+                                            series: [{
+                                                name: 'Sales',
+                                                data: [31, 40, 28, 51, 42, 82, 56],
+                                            }, {
+                                                name: 'Revenue',
+                                                data: [11, 32, 45, 32, 34, 52, 41]
+                                            }, {
+                                                name: 'Customers',
+                                                data: [15, 11, 32, 18, 9, 24, 11]
+                                            }],
+                                            chart: {
+                                                height: 350,
+                                                type: 'area',
+                                                toolbar: {
+                                                    show: false
+                                                },
+                                            },
+                                            markers: {
+                                                size: 4
+                                            },
+                                            colors: ['#4154f1', '#2eca6a', '#ff771d'],
+                                            fill: {
+                                                type: "gradient",
+                                                gradient: {
+                                                    shadeIntensity: 1,
+                                                    opacityFrom: 0.3,
+                                                    opacityTo: 0.4,
+                                                    stops: [0, 90, 100]
+                                                }
+                                            },
+                                            dataLabels: {
+                                                enabled: false
+                                            },
+                                            stroke: {
+                                                curve: 'smooth',
+                                                width: 2
+                                            },
+                                            xaxis: {
+                                                type: 'datetime',
+                                                categories: ["2018-09-19T00:00:00.000Z", "2018-09-19T01:30:00.000Z", "2018-09-19T02:30:00.000Z", "2018-09-19T03:30:00.000Z", "2018-09-19T04:30:00.000Z", "2018-09-19T05:30:00.000Z", "2018-09-19T06:30:00.000Z"]
+                                            },
+                                            tooltip: {
+                                                x: {
+                                                    format: 'dd/MM/yy HH:mm'
+                                                },
+                                            }
+                                        }).render();
+                                    });
+                                </script>
+                                <!-- End Line Chart -->
+
+                            </div>
+
+                        </div>
+                    </div><!-- End Reports -->
+
+
+
+                    <!-- Recent Sales -->
+                    <div class="col-12">
+                        <div class="card recent-sales overflow-auto">
+
+                            <div class="filter">
+                                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                    <li class="dropdown-header text-start">
+                                        <h6>Filter</h6>
+                                    </li>
+
+                                    <li><a class="dropdown-item" href="#">Today</a></li>
+                                    <li><a class="dropdown-item" href="#">This Month</a></li>
+                                    <li><a class="dropdown-item" href="#">This Year</a></li>
+                                </ul>
+                            </div>
+
+                            <div class="card-body">
+                                <h5 class="card-title">Recent Sales <span>| Today</span></h5>
+
+                                <table class="table table-borderless datatable">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Project No</th>
+                                            <th scope="col">Project Name</th>
+                                            <th scope="col">Field</th>
+                                            <th scope="col">Region</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for i in projects %}
+                                        <tr>
+                                            <th scope="row"><a href="#">#</a></th>
+                                            <th scope="row"><a href="#">{{i.id}}</a></th>
+                                            <th scope="row"><a href="#">{{i.proj_name}}</a></th>
+                                            <th scope="row"><a href="#">{{i.area}}</a></th>
+                                            <th scope="row"><a href="#">{{i.region}}</a></th>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div><!-- End Recent Sales -->
+
+                    <!-- Top Selling -->
+                    <div class="col-12">
+                        <div class="card top-selling overflow-auto">
+
+                            <div class="filter">
+                                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                    <li class="dropdown-header text-start">
+                                        <h6>Filter</h6>
+                                    </li>
+                                    <li><a class="dropdown-item" href="#">Today</a></li>
+                                    <li><a class="dropdown-item" href="#">This Month</a></li>
+                                    <li><a class="dropdown-item" href="#">This Year</a></li>
+                                </ul>
+                            </div>
+
+                        </div>
+                    </div><!-- End Top Selling -->
+                </div>
+            </div><!-- End Left side columns -->
+            <!-- Right side columns -->
+            <div class="col-lg-4">
+                <!-- Recent Activity -->
+                <div class="card">
+                    <div class="filter">
+                        <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                            <li class="dropdown-header text-start">
+                                <h6>Filter</h6>
+                            </li>
+
+                            <li><a class="dropdown-item" href="#">Today</a></li>
+                            <li><a class="dropdown-item" href="#">This Month</a></li>
+                            <li><a class="dropdown-item" href="#">This Year</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="card-body">
+                        <h5 class="card-title"> According Regions<span></span></h5>
+
+                        <div class="activity">
+                            <div class="activity-item d-flex">
+                                <div class="activite-label">Eastren Region</div>
+                                <i class='bi bi-circle-fill activity-badge text-success align-self-start'>
+                                </i>
+                                <div class="activity-content">{{region1}}
+                                </div>
+                            </div><!-- End activity item-->
+
+                            <div class="activity-item d-flex">
+                                <div class="activite-label">Weastern Region</div>
+                                <i class='bi bi-circle-fill activity-badge text-danger align-self-start'>
+                                </i>
+                                <div class="activity-content">{{region2}}
+                                </div>
+                            </div><!-- End activity item-->
+
+                            <div class="activity-item d-flex">
+                                <div class="activite-label">Central Region</div>
+                                <i class='bi bi-circle-fill activity-badge text-primary align-self-start'>
+                                </i>
+                                <div class="activity-content">{{region3}}
+                                </div>
+                            </div><!-- End activity item-->
+
+                            <div class="activity-item d-flex">
+                                <div class="activite-label">Southern Region</div>
+                                <i class='bi bi-circle-fill activity-badge text-info align-self-start'>
+                                </i>
+                                <div class="activity-content">{{region4}}
+                                </div>
+                            </div><!-- End activity item-->
+                        </div>
+
+                    </div>
+                </div><!-- End Recent Activity -->
+
+                <!-- Fields Activity -->
+                <div class="card">
+                    <div class="filter">
+                        <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                            <li class="dropdown-header text-start">
+                                <h6>Filter</h6>
+                            </li>
+
+                            <li><a class="dropdown-item" href="#">Today</a></li>
+                            <li><a class="dropdown-item" href="#">This Month</a></li>
+                            <li><a class="dropdown-item" href="#">This Year</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="card-body">
+                        <h5 class="card-title">According Fields<span>|</span></h5>
+
+                        <div class="activity">
+                            <div class="activity-item d-flex">
+                                <div class="activite-label">Industry Field </div>
+                                <i class='bi bi-circle-fill activity-badge text-success align-self-start'>
+                                </i>
+                                <div class="activity-content">{{area1}}
+                                </div>
+                            </div><!-- End activity item-->
+                            <br>
+
+                            <div class="activity-item d-flex">
+                                <div class="activite-label">Tourism Field </div>
+                                <i class='bi bi-circle-fill activity-badge text-danger align-self-start'>
+                                </i>
+                                <div class="activity-content">{{area2}}
+                                </div>
+                            </div><!-- End activity item-->
+                            <br>
+
+                            <div class="activity-item d-flex">
+                                <div class="activite-label">Health Field </div>
+                                <i class='bi bi-circle-fill activity-badge text-primary align-self-start'>
+                                </i>
+                                <div class="activity-content">{{area3}}
+                                </div>
+                            </div><!-- End activity item-->
+                            <br>
+
+                            <div class="activity-item d-flex">
+                                <div class="activite-label">Education Field </div>
+                                <i class='bi bi-circle-fill activity-badge text-info align-self-start'>
+                                </i>
+                                <div class="activity-content">{{area4}}
+                                </div>
+                            </div><!-- End activity item-->
+                            <br>
+
+                            <div class="activity-item d-flex">
+                                <div class="activite-label">Services Field </div>
+                                <i class='bi bi-circle-fill activity-badge text-success align-self-start'>
+                                </i>
+                                <div class="activity-content">{{area5}}
+                                </div>
+                            </div><!-- End activity item-->
+                            <br>
+
+                            <div class="activity-item d-flex">
+                                <div class="activite-label">Real Estate Field </div>
+                                <i class='bi bi-circle-fill activity-badge text-danger align-self-start'>
+                                </i>
+                                <div class="activity-content">{{area6}}
+                                </div>
+                            </div><!-- End activity item-->
+                            <br>
+
+                            <div class="activity-item d-flex">
+                                <div class="activite-label">Electricity and Energy Field</div>
+                                <i class='bi bi-circle-fill activity-badge text-primary align-self-start'>
+                                </i>
+                                <div class="activity-content">{{area7}}
+                                </div>
+                            </div><!-- End activity item-->
+                            <br>
+                            <div class="activity-item d-flex">
+                                <div class="activite-label">Transportation Field </div>
+                                <i class='bi bi-circle-fill activity-badge text-info align-self-start'>
+                                </i>
+                                <div class="activity-content">{{area8}}
+                                </div>
+                            </div><!-- End activity item-->
+                            <br>
+                            <div class="activity-item d-flex">
+                                <div class="activite-label">Transformative Industries Field</div>
+                                <i class='bi bi-circle-fill activity-badge text-success align-self-start'>
+                                </i>
+                                <div class="activity-content">{{area9}}
+                                </div>
+                            </div><!-- End activity item-->
+                        </div>
+
+                    </div>
+                </div><!-- End Fields Activity -->
+
+
+                <!-- Budget Report -->
+                <div class="card">
+                    <div class="filter">
+                        <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                            <li class="dropdown-header text-start">
+                                <h6>Filter</h6>
+                            </li>
+
+                            <li><a class="dropdown-item" href="#">Today</a></li>
+                            <li><a class="dropdown-item" href="#">This Month</a></li>
+                            <li><a class="dropdown-item" href="#">This Year</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="card-body pb-0">
+                        <h5 class="card-title">Budget Report <span>| This Month</span></h5>
+
+                        <div id="budgetChart" style="min-height: 400px;" class="echart"></div>
+
+                        <script>
+                            document.addEventListener("DOMContentLoaded", () => {
+                                var budgetChart = echarts.init(document.querySelector("#budgetChart")).setOption({
+                                    legend: {
+                                        data: ['Allocated Budget', 'Actual Spending']
+                                    },
+                                    radar: {
+                                        // shape: 'circle',
+                                        indicator: [{
+                                            name: 'Sales',
+                                            max: 6500
+                                        },
+                                        {
+                                            name: 'Administration',
+                                            max: 16000
+                                        },
+                                        {
+                                            name: 'Information Technology',
+                                            max: 30000
+                                        },
+                                        {
+                                            name: 'Customer Support',
+                                            max: 38000
+                                        },
+                                        {
+                                            name: 'Development',
+                                            max: 52000
+                                        },
+                                        {
+                                            name: 'Marketing',
+                                            max: 25000
+                                        }
+                                        ]
+                                    },
+                                    series: [{
+                                        name: 'Budget vs spending',
+                                        type: 'radar',
+                                        data: [{
+                                            value: [4200, 3000, 20000, 35000, 50000, 18000],
+                                            name: 'Allocated Budget'
+                                        },
+                                        {
+                                            value: [5000, 14000, 28000, 26000, 42000, 21000],
+                                            name: 'Actual Spending'
+                                        }
+                                        ]
+                                    }]
+                                });
+                            });
+                        </script>
+
+                    </div>
+                </div><!-- End Budget Report -->
+
+
+            </div><!-- End Right side columns -->
+
+        </div>
+    </section>
+</main><!-- End #main -->
+
+{% block script %}
+<div id="map" style="height: 50px; width: 600px;">
+    <script type="text/javascript">
+        function out_layers(map, options) {
+            var osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+                attribution: '© OpenStreetMap'
+            });
+
+            var osmHOT = L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+                attribution: '© OpenStreetMap contributors, Tiles style by Humanitarian OpenStreetMap Team hosted by OpenStreetMap France'
+            });
+            var openTopoMap = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+                attribution: 'Map data: © OpenStreetMap contributors, SRTM | Map style: © OpenTopoMap (CC-BY-SA)'
+            });
+
+            var googleSat = L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
+                maxZoom: 20,
+                subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
+            });
+            // googleSat.addTo(pibMap);
+
+            var googleHybrid = L.tileLayer('http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}', {
+                maxZoom: 20,
+                subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
+            });
+
+            var datasets = new L.GeoJSON.AJAX("{% url 'city' %}", {
+                style: function colors(feature) {
+                    switch (feature.properties.pk) {
+                        case '1':
+                            return {
+                                radius: 8,
+                                fillColor: 'blue',
+                                weight: 2,
+                                opacity: 1,
+                                color: 'orange',
+                                fillOpacity: 0.7
+                            };
+                            break;
+                        case '2':
+                            return {
+                                fillColor: '#285078',
+                                weight: 2,
+                                opacity: 1,
+                                color: 'orange',
+                                fillOpacity: 0.7
+                            };
+                            break;
+                        case '3':
+                            return {
+                                fillColor: '#a0c8f0',
+                                weight: 2,
+                                opacity: 1,
+                                color: 'orange',
+                                fillOpacity: 0.7
+                            };
+                            break;
+                        case '4':
+                            return {
+                                fillColor: '#FCF3CF ',
+                                weight: 2,
+                                opacity: 1,
+                                color: 'orange',
+                                fillOpacity: 0.7
+                            };
+                            break;
+                    }
+                },
+                onEachFeature: function (feature, layer) {
+                    layer.bindPopup(feature.properties.name_ar.toString());
+                }
+            });
+
+            var points = new L.GeoJSON.AJAX("{% url 'projects_data' %}", {
+                onEachFeature: function (feature, layer) {
+                    layer.bindPopup(feature.properties.proj_name.toString());
+                }
+            });
+
+            datasets.addTo(map);
+            points.addTo(map);
+
+            var baseMaps = {
+                "OpenStreetMap": osm,
+                "OpenStreetMap.HOT": osmHOT,
+                "openTopoMap": openTopoMap,
+                "Satallite": googleSat,
+                "googleHybrid": googleHybrid,
+
+            };
+
+            var overlayMaps = {
+                "region": datasets,
+                "project_na": points,
+            };
+            var layerControl = L.control.layers(baseMaps, overlayMaps).addTo(map);
+        }
+    </script>
+</div>
+</div>
+</div>
+</div>
+{% endblock script %}
+
+
+{% endblock body %}

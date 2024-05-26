@@ -1,0 +1,114 @@
+<!-- bradcam_area  -->
+<div class="bradcam_area bradcam_bg_1">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</div>
+<!--/ bradcam_area  -->
+
+<br>
+<div class="row">
+    <div class="col">
+        <div class="col-md">
+            <div class="card text-center text-white mb-3" id="total-projects">
+                <div class="card-header">
+                    <h5 class="card-title">Total Projects</h5>
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title">{{total_proj}}</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="col-md">
+            <div class="card text-center text-white mb-3" id="total-projects">
+                <div class="card-header">
+                    <h5 class="card-title">Total Applicants</h5>
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title">{{total_app}}</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="col-md">
+            <div class="card text-center text-white mb-3" id="total-projects">
+                <div class="card-header">
+                    <h5 class="card-title">Total Investors</h5>
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title">{{total_investors}}</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="col-md">
+            <div class="card text-center text-white mb-3" id="total-projects">
+                <div class="card-header">
+                    <h5 class="card-title">Regions</h5>
+                </div>
+                <div class="card-body">
+                    <ul>
+                        <li>Region 1: <span>{{region1}}</span></li>
+                        <li>Region 2: <span>{{region2}}</span></li>
+                        <li>Region 3: <span>{{region3}}</span></li>
+                        <li>Region 4: <span>{{region4}}</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <div class="col-md">
+                <div class="card text-center text-white mb-3" id="total-projects">
+                    <div class="card-header">
+                        <h5 class="card-title">Investment Map</h5>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">{{ map|safe}}</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="col-md">
+                <div class="card text-center text-white mb-3" id="total-projects">
+                    <div class="card-header">
+                        <h5 class="card-title">Projects</h5>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">
+                            <table class="table">
+                                <tr>
+                                    <th>Project No</th>
+                                    <th>Project Name</th>
+                                    <th> Field </th>
+                                    <th>Region</th>
+                                </tr>
+                                {% for i in projects %}
+                                <tr>
+                                    <th>{{i.id}} </th>
+                                    <th>{{i.proj_name}} </th>
+                                    <th> {{i.area}}</th>
+                                    <th>{{i.region}} </th>
+                                </tr>
+                                {% endfor %}
+                            </table>
+                        </h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
