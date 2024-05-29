@@ -114,22 +114,23 @@ def homepage(request):
     total_investors = investor.count()
 
 
-    region1 = stations.filter(region=1).count()
-    region2 = stations.filter(region=2).count()
-    region3 = stations.filter(region=3).count()
-    region4 = stations.filter(region=4).count()
+    region1 = stations.filter(region_id=1).count()
+    region2 = stations.filter(region_id=2).count()
+    region3 = stations.filter(region_id=3).count()
+    region4 = stations.filter(region_id=4).count()
 
     area1 = stations.filter(area_id=8).count()
-    area2 = stations.filter(area=9).count()
-    area3 = stations.filter(area=10).count()
-    area4 = stations.filter(area=11).count()
-    area5 = stations.filter(area=12).count()
-    area6 = stations.filter(area=13).count()
-    area7 = stations.filter(area=14).count()
-    area8 = stations.filter(area=15).count()
-    area9 = stations.filter(area=16).count()
+    area2 = stations.filter(area_id=9).count()
+    area3 = stations.filter(area_id=10).count()
+    area4 = stations.filter(area_id=11).count()
+    area5 = stations.filter(area_id=12).count()
+    area6 = stations.filter(area_id=13).count()
+    area7 = stations.filter(area_id=14).count()
+    area8 = stations.filter(area_id=15).count()
+    area9 = stations.filter(area_id=16).count()
 
-
+    area_list =['Industry','Tourism','Health','Education','Services','Real Estate','Transportation','Elictricity & Energy','Transformative']
+    number_list = [area1,area2,area3,area4,area5,area6,area7,area8,area9]
 
 
     #stations = Municip.objects.all()
@@ -140,8 +141,11 @@ def homepage(request):
     FastMarkerCluster(data=list(zip(latitudes, longitudes))).add_to(m)
     #folium.Marker(popup=station.)
 
+    regn_list = ['Eastern', 'Western', 'Central', 'Southern']
+    regn_number = [region1,region2,region3,region4]
 
-    context ={'map': m._repr_html_(), 'projects': project, 'investors':investor,'applicants':applicant,'total_proj':total_project, 'total_app':total_applicant, 'region1':region1, 'region2':region2, 'region3':region3, 'region4':region4,'area1':area1,'area1':area2,'area2':area2,'area3':area3,'area4':area4 ,'area5':area5, 'area6':area6,'area7':area7,'area8':area8,'area9':area9,'total_investors':total_investors}
+
+    context ={'map': m._repr_html_(), 'projects': project, 'investors':investor,'applicants':applicant,'total_proj':total_project, 'total_app':total_applicant, 'region1':region1, 'region2':region2, 'region3':region3, 'region4':region4,'area1':area1,'area1':area2,'area2':area2,'area3':area3,'area4':area4 ,'area5':area5, 'area6':area6,'area7':area7,'area8':area8,'area9':area9,'total_investors':total_investors,'area_list':area_list, 'number_list':number_list, 'regn_list':regn_list, 'regn_number':regn_number}
     return render(request, 'mainpage.html', context) # dashboard.html
 
 
@@ -150,20 +154,30 @@ def projects(request):
     return render(request, 'projects_all.html', {'projects': project})
 
 def applicants(request):
+    labels =[]
+    data = []
     applicant = Applicants.objects.all()
     #project = Locations.objects.all()
-    project = Projects.objects.all()
+    project = Projects.objects.all()  #.order_by('id')
+    project2 = Projects.objects.all().order_by('-id')[:10]
     investor = Investors.objects.all()
     total_project = project.count()
     total_applicant = applicant.count()
     total_investors = investor.count()
+
 
     region1 = project.filter(region=1).count()
     region2 = project.filter(region=2).count()
     region3 = project.filter(region=3).count()
     region4 = project.filter(region=4).count()
 
-    context ={'projects': project, 'investors':investor,'applicants':applicant,'total_proj':total_project, 'total_app':total_applicant, 'region1':region1, 'region2':region2, 'region3':region3, 'region4':region4, 'total_investors':total_investors}
+    proj = Investors.objects.order_by('-invest_cost')[:5]
+    for rgn in proj:
+        labels.append(rgn.name)
+        data.append(rgn.invest_cost)
+
+
+    context ={'projects': project2, 'investors':investor,'applicants':applicant,'total_proj':total_project, 'total_app':total_applicant, 'region1':region1, 'region2':region2, 'region3':region3, 'region4':region4, 'total_investors':total_investors, 'labels': labels, 'data': data}
     return render(request, 'applicants.html', context)
 
 def investor(request):

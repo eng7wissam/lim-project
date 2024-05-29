@@ -144,7 +144,7 @@ class Locations(models.Model):
     geom = gis_models.MultiPointField(srid=4326, null=True)
     objects =gis_models.Manager()
 
-    def __unicode__(self):
+    def __str__(self):  #unicode
         return self.proj_name
     
 

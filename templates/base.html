@@ -15,7 +15,7 @@
         }
 
         #gis {
-            width: 80%;
+            width: 100%;
             height: 680px;
         }
     </style>
@@ -28,8 +28,11 @@
     <meta content="" name="keywords">
 
     <!-- Favicons -->
-    <link href="{% static 'assets/img/favicon.png' %}" rel="icon">
-    <link href="{% static 'assets/img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="{% static 'assets/img/favicon1.png' %}" rel="icon">
+    <link href="{% static 'assets/img/apple-touch-icon1.png' %}" rel="apple-touch-icon">
 
     <!-- Google Fonts -->
     <link href="https://fonts.gstatic.com" rel="preconnect">
@@ -69,7 +72,7 @@
 
         <div class="d-flex align-items-center justify-content-between">
             <a href="/" class="logo d-flex align-items-center">
-                <img src="assets/img/logo.png" alt="">
+                <img src="assets/img/logo1.png" alt="">
                 <span class="d-none d-lg-block">Libya Invesment Map</span>
             </a>
             <i class="bi bi-list toggle-sidebar-btn"></i>
@@ -85,15 +88,23 @@
     </header> <!-- End header -->
 
     <!-- ======= Sidebar ======= -->
-    <aside id="sidebar" class="sidebar">
+    <aside id="sidebar" class="sidebar" style="padding: 11px 09px; height:280px">
         <ul class="sidebar-nav" id="sidebar-nav">
+            <li style="display: inline-block;text-align: center;background-color:#0094ff;"><a class="navbar-brand"
+                    ui-sref="sitesDamages.sitesList" style="padding: 11px 09px; height:auto" title="events"><i
+                        class="glyphicon glyphicon-exclamation-sign"></i></a>
+            </li>
 
-            <li class="nav-item">
-                <a class="nav-link " href="index.html">
+            <li style="display: inline-block;text-align: center;background-color:red;" class="nav-item">
+                <a class="nav-link " href="/">
                     <i class="bi bi-grid"></i>
                     <span>Dashboard</span>
                 </a>
             </li><!-- End Dashboard Nav -->
+            <li style="display: inline-block;text-align: center;background-color:red;"><a class="navbar-brand"
+                    ui-sref="sites.list" style="padding: 11px 09px; height:auto" title="sites"><i
+                        class="glyphicon glyphicon-tree-conifer"></i></a></li>
+
 
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="mapin">
@@ -154,17 +165,18 @@
     <script type="text/javascript" src="{% static 'leaflet-groupedlayercontrol/leaflet-routing-machine.js' %}"></script>
 
 
-    <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
-    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/vendor/chart.js/chart.umd.js"></script>
-    <script src="assets/vendor/echarts/echarts.min.js"></script>
-    <script src="assets/vendor/quill/quill.js"></script>
-    <script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
-    <script src="assets/vendor/tinymce/tinymce.min.js"></script>
-    <script src="assets/vendor/php-email-form/validate.js"></script>
+    <script src="{% static 'assets/js/chart.js"></script>
+    <script src="{% static 'assets/vendor/apexcharts/apexcharts.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/chart.js/chart.umd.js' %}"></script>
+    <script src="{% static 'assets/vendor/echarts/echarts.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/quill/quill.js' %}"></script>
+    <script src="{% static 'assets/vendor/simple-datatables/simple-datatables.js' %}"></script>
+    <script src="{% static 'assets/vendor/tinymce/tinymce.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/php-email-form/validate.js' %}"></script>
 
     <!-- Template Main JS File -->
-    <script src="assets/js/main.js"></script>
+    <script src="{% static 'assets/js/main.js' %}"></script>
 
 
 

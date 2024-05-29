@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% block body %}
 
+
 <main id="main" class="main">
 
     <div class="pagetitle">
@@ -19,7 +20,6 @@
             <!-- Left side columns -->
             <div class="col-lg-8">
                 <div class="row">
-
                     <!-- Sales Card -->
                     <div class="col-xxl-4 col-md-6">
                         <div class="card info-card sales-card">
@@ -43,7 +43,7 @@
                                 <div class="d-flex align-items-center">
                                     <div
                                         class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                        <i class="bi bi-cart"></i>
+                                        <i class="bi bi-bar-chart-line-fill"></i>
                                     </div>
                                     <div class="ps-3">
                                         <h6>{{total_proj}}</h6>
@@ -152,113 +152,122 @@
                                 <!-- Line Chart -->
                                 <div id="reportsChart"></div>
 
-                                <script>
-                                    document.addEventListener("DOMContentLoaded", () => {
-                                        new ApexCharts(document.querySelector("#reportsChart"), {
-                                            series: [{
-                                                name: 'Sales',
-                                                data: [31, 40, 28, 51, 42, 82, 56],
-                                            }, {
-                                                name: 'Revenue',
-                                                data: [11, 32, 45, 32, 34, 52, 41]
-                                            }, {
-                                                name: 'Customers',
-                                                data: [15, 11, 32, 18, 9, 24, 11]
-                                            }],
-                                            chart: {
-                                                height: 350,
-                                                type: 'area',
-                                                toolbar: {
-                                                    show: false
-                                                },
-                                            },
-                                            markers: {
-                                                size: 4
-                                            },
-                                            colors: ['#4154f1', '#2eca6a', '#ff771d'],
-                                            fill: {
-                                                type: "gradient",
-                                                gradient: {
-                                                    shadeIntensity: 1,
-                                                    opacityFrom: 0.3,
-                                                    opacityTo: 0.4,
-                                                    stops: [0, 90, 100]
-                                                }
-                                            },
-                                            dataLabels: {
-                                                enabled: false
-                                            },
-                                            stroke: {
-                                                curve: 'smooth',
-                                                width: 2
-                                            },
-                                            xaxis: {
-                                                type: 'datetime',
-                                                categories: ["2018-09-19T00:00:00.000Z", "2018-09-19T01:30:00.000Z", "2018-09-19T02:30:00.000Z", "2018-09-19T03:30:00.000Z", "2018-09-19T04:30:00.000Z", "2018-09-19T05:30:00.000Z", "2018-09-19T06:30:00.000Z"]
-                                            },
-                                            tooltip: {
-                                                x: {
-                                                    format: 'dd/MM/yy HH:mm'
-                                                },
-                                            }
-                                        }).render();
-                                    });
-                                </script>
-                                <!-- End Line Chart -->
 
                             </div>
 
                         </div>
                     </div><!-- End Reports -->
 
-
-
-                    <!-- Recent Sales -->
-                    <div class="col-12">
-                        <div class="card recent-sales overflow-auto">
-
-                            <div class="filter">
-                                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                    <li class="dropdown-header text-start">
-                                        <h6>Filter</h6>
-                                    </li>
-
-                                    <li><a class="dropdown-item" href="#">Today</a></li>
-                                    <li><a class="dropdown-item" href="#">This Month</a></li>
-                                    <li><a class="dropdown-item" href="#">This Year</a></li>
-                                </ul>
-                            </div>
-
+                    <div class="col-6">
+                        <div class="card info-card sales-card">
                             <div class="card-body">
-                                <h5 class="card-title">Recent Sales <span>| Today</span></h5>
+                                <h5 class="card-title"> Fields Chart <span>|</span></h5>
+                                <!-- Bar Chart -->
+                                <canvas id="barChart" style="max-height: 600px;"></canvas>
+                                <div>
+                                    <script>
+                                        document.addEventListener("DOMContentLoaded", () => {
+                                            new Chart(document.querySelector('#barChart'), {
+                                                type: 'bar',
+                                                data: {
+                                                    labels: [{% for area_l in area_list %} '{{area_l}}', {% endfor %}],
+                                            datasets: [{
+                                                label: 'Bar Chart',
+                                                data: [{% for area_n in number_list %} '{{area_n}}', {% endfor %}],
+                                            backgroundColor: [
+                                            'rgba(255, 99, 132, 0.2)',
+                                            'rgba(255, 159, 64, 0.2)',
+                                            'rgba(255, 205, 86, 0.2)',
+                                            'rgba(75, 192, 192, 0.2)',
+                                            'rgba(54, 162, 235, 0.2)',
+                                            'rgba(153, 102, 255, 0.2)',
+                                            'rgba(201, 203, 207, 0.2)'
+                                        ],
+                                            borderColor: [
+                                            'rgb(255, 99, 132)',
+                                            'rgb(255, 159, 64)',
+                                            'rgb(255, 205, 86)',
+                                            'rgb(75, 192, 192)',
+                                            'rgb(54, 162, 235)',
+                                            'rgb(153, 102, 255)',
+                                            'rgb(201, 203, 207)'
+                                        ],
+                                            borderWidth: 1
+                                            }]
+                                            },
+                                            options: {
+                                            scales: {
+                                                y: {
+                                                    beginAtZero: true
+                                                }
+                                            }
+                                        }
+                                        });
+                                    });
+                                    </script>
+                                </div>
+                                <!-- End Bar CHart -->
 
-                                <table class="table table-borderless datatable">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">#</th>
-                                            <th scope="col">Project No</th>
-                                            <th scope="col">Project Name</th>
-                                            <th scope="col">Field</th>
-                                            <th scope="col">Region</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {% for i in projects %}
-                                        <tr>
-                                            <th scope="row"><a href="#">#</a></th>
-                                            <th scope="row"><a href="#">{{i.id}}</a></th>
-                                            <th scope="row"><a href="#">{{i.proj_name}}</a></th>
-                                            <th scope="row"><a href="#">{{i.area}}</a></th>
-                                            <th scope="row"><a href="#">{{i.region}}</a></th>
-                                        </tr>
-                                        {% endfor %}
-                                    </tbody>
-                                </table>
+
                             </div>
-
                         </div>
-                    </div><!-- End Recent Sales -->
+                    </div>
+
+
+                    <div class="col-6">
+                        <div class="card info-card sales-card">
+                            <div class="card-body">
+                                <h5 class="card-title"> Regions Charts <span>|</span></h5>
+                                <!-- Doughnut Chart -->
+                                <canvas id="myChart" style="max-height: 190px;"></canvas>
+                                <script type="text/javascript">
+                                    var ctx = document.getElementById('myChart').getContext('2d');
+                                    var myChart = new Chart(ctx, {
+                                        type: 'doughnut',
+                                        data: {
+                                            labels: [{% for area_l in regn_list %} '{{area_l}}', {% endfor %}],
+                                    datasets: [{
+                                        label: '# of Votes',
+                                        data: [{% for area_n in regn_number %} '{{ area_n }}', {% endfor %}],
+                                        backgroundColor: [
+                                            'rgba(255, 99, 132, 0.2)',
+                                            'rgba(54, 162, 235, 0.2)',
+                                            'rgba(255, 206, 86, 0.2)',
+                                            'rgba(75, 192, 192, 0.2)',
+                                            'rgba(153, 102, 255, 0.2)',
+                                            'rgba(255, 159, 64, 0.2)'
+                                        ],
+                                            borderColor: [
+                                                'rgba(255, 99, 132, 1)',
+                                                'rgba(54, 162, 235, 1)',
+                                                'rgba(255, 206, 86, 1)',
+                                                'rgba(75, 192, 192, 1)',
+                                                'rgba(153, 102, 255, 1)',
+                                                'rgba(255, 159, 64, 1)'
+                                            ],
+                                                borderWidth: 1
+                                    }]
+                                        },
+                                    options: {
+                                        scales: {
+                                            yAxes: [{
+                                                ticks: {
+                                                    beginAtZero: true
+                                                }
+                                            }]
+                                        }
+                                    }
+                                    });
+
+                                </script>
+                                <!-- End Doughnut CHart -->
+
+
+                            </div>
+                        </div>
+                    </div>
+
+
 
                     <!-- Top Selling -->
                     <div class="col-12">
@@ -302,7 +311,7 @@
 
                         <div class="activity">
                             <div class="activity-item d-flex">
-                                <div class="activite-label">Eastren Region</div>
+                                <div class="activite-label">Eastren Region --</div>
                                 <i class='bi bi-circle-fill activity-badge text-success align-self-start'>
                                 </i>
                                 <div class="activity-content">{{region1}}
@@ -318,7 +327,7 @@
                             </div><!-- End activity item-->
 
                             <div class="activity-item d-flex">
-                                <div class="activite-label">Central Region</div>
+                                <div class="activite-label">Central Region ---</div>
                                 <i class='bi bi-circle-fill activity-badge text-primary align-self-start'>
                                 </i>
                                 <div class="activity-content">{{region3}}
@@ -326,7 +335,7 @@
                             </div><!-- End activity item-->
 
                             <div class="activity-item d-flex">
-                                <div class="activite-label">Southern Region</div>
+                                <div class="activite-label">Southern Region-</div>
                                 <i class='bi bi-circle-fill activity-badge text-info align-self-start'>
                                 </i>
                                 <div class="activity-content">{{region4}}
@@ -354,52 +363,51 @@
 
                     <div class="card-body">
                         <h5 class="card-title">According Fields<span>|</span></h5>
-
                         <div class="activity">
                             <div class="activity-item d-flex">
-                                <div class="activite-label">Industry Field </div>
+                                <div class="activite-label">Industry Field &nbsp;&nbsp;&nbsp;&nbsp;</div>
                                 <i class='bi bi-circle-fill activity-badge text-success align-self-start'>
                                 </i>
                                 <div class="activity-content">{{area1}}
                                 </div>
                             </div><!-- End activity item-->
-                            <br>
+
 
                             <div class="activity-item d-flex">
-                                <div class="activite-label">Tourism Field </div>
+                                <div class="activite-label">Tourism Field &nbsp;&nbsp;&nbsp;&nbsp;</div>
                                 <i class='bi bi-circle-fill activity-badge text-danger align-self-start'>
                                 </i>
                                 <div class="activity-content">{{area2}}
                                 </div>
                             </div><!-- End activity item-->
-                            <br>
+
 
                             <div class="activity-item d-flex">
-                                <div class="activite-label">Health Field </div>
+                                <div class="activite-label">Health Field &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                </div>
                                 <i class='bi bi-circle-fill activity-badge text-primary align-self-start'>
                                 </i>
                                 <div class="activity-content">{{area3}}
                                 </div>
                             </div><!-- End activity item-->
-                            <br>
+
 
                             <div class="activity-item d-flex">
-                                <div class="activite-label">Education Field </div>
+                                <div class="activite-label">Education Field&nbsp;&nbsp;</div>
                                 <i class='bi bi-circle-fill activity-badge text-info align-self-start'>
                                 </i>
                                 <div class="activity-content">{{area4}}
                                 </div>
                             </div><!-- End activity item-->
-                            <br>
 
                             <div class="activity-item d-flex">
-                                <div class="activite-label">Services Field </div>
+                                <div class="activite-label">Services Field&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
                                 <i class='bi bi-circle-fill activity-badge text-success align-self-start'>
                                 </i>
                                 <div class="activity-content">{{area5}}
                                 </div>
                             </div><!-- End activity item-->
-                            <br>
+
 
                             <div class="activity-item d-flex">
                                 <div class="activite-label">Real Estate Field </div>
@@ -408,7 +416,16 @@
                                 <div class="activity-content">{{area6}}
                                 </div>
                             </div><!-- End activity item-->
-                            <br>
+
+                            <div class="activity-item d-flex">
+                                <div class="activite-label">Transportation Field </div>
+                                <i class='bi bi-circle-fill activity-badge text-info align-self-start'>
+                                </i>
+                                <div class="activity-content">{{area8}}
+                                </div>
+                            </div><!-- End activity item-->
+
+
 
                             <div class="activity-item d-flex">
                                 <div class="activite-label">Electricity and Energy Field</div>
@@ -417,15 +434,8 @@
                                 <div class="activity-content">{{area7}}
                                 </div>
                             </div><!-- End activity item-->
-                            <br>
-                            <div class="activity-item d-flex">
-                                <div class="activite-label">Transportation Field </div>
-                                <i class='bi bi-circle-fill activity-badge text-info align-self-start'>
-                                </i>
-                                <div class="activity-content">{{area8}}
-                                </div>
-                            </div><!-- End activity item-->
-                            <br>
+
+
                             <div class="activity-item d-flex">
                                 <div class="activite-label">Transformative Industries Field</div>
                                 <i class='bi bi-circle-fill activity-badge text-success align-self-start'>
@@ -439,79 +449,11 @@
                 </div><!-- End Fields Activity -->
 
 
+
                 <!-- Budget Report -->
-                <div class="card">
-                    <div class="filter">
-                        <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                            <li class="dropdown-header text-start">
-                                <h6>Filter</h6>
-                            </li>
 
-                            <li><a class="dropdown-item" href="#">Today</a></li>
-                            <li><a class="dropdown-item" href="#">This Month</a></li>
-                            <li><a class="dropdown-item" href="#">This Year</a></li>
-                        </ul>
-                    </div>
 
-                    <div class="card-body pb-0">
-                        <h5 class="card-title">Budget Report <span>| This Month</span></h5>
-
-                        <div id="budgetChart" style="min-height: 400px;" class="echart"></div>
-
-                        <script>
-                            document.addEventListener("DOMContentLoaded", () => {
-                                var budgetChart = echarts.init(document.querySelector("#budgetChart")).setOption({
-                                    legend: {
-                                        data: ['Allocated Budget', 'Actual Spending']
-                                    },
-                                    radar: {
-                                        // shape: 'circle',
-                                        indicator: [{
-                                            name: 'Sales',
-                                            max: 6500
-                                        },
-                                        {
-                                            name: 'Administration',
-                                            max: 16000
-                                        },
-                                        {
-                                            name: 'Information Technology',
-                                            max: 30000
-                                        },
-                                        {
-                                            name: 'Customer Support',
-                                            max: 38000
-                                        },
-                                        {
-                                            name: 'Development',
-                                            max: 52000
-                                        },
-                                        {
-                                            name: 'Marketing',
-                                            max: 25000
-                                        }
-                                        ]
-                                    },
-                                    series: [{
-                                        name: 'Budget vs spending',
-                                        type: 'radar',
-                                        data: [{
-                                            value: [4200, 3000, 20000, 35000, 50000, 18000],
-                                            name: 'Allocated Budget'
-                                        },
-                                        {
-                                            value: [5000, 14000, 28000, 26000, 42000, 21000],
-                                            name: 'Actual Spending'
-                                        }
-                                        ]
-                                    }]
-                                });
-                            });
-                        </script>
-
-                    </div>
-                </div><!-- End Budget Report -->
+                <!-- End Budget Report -->
 
 
             </div><!-- End Right side columns -->
@@ -552,7 +494,7 @@
             var datasets = new L.GeoJSON.AJAX("{% url 'city' %}", {
                 style: function colors(feature) {
                     switch (feature.properties.pk) {
-                        case '1':
+                        case '':
                             return {
                                 radius: 8,
                                 fillColor: 'blue',
@@ -562,7 +504,7 @@
                                 fillOpacity: 0.7
                             };
                             break;
-                        case '2':
+                        case '':
                             return {
                                 fillColor: '#285078',
                                 weight: 2,
@@ -571,7 +513,7 @@
                                 fillOpacity: 0.7
                             };
                             break;
-                        case '3':
+                        case '':
                             return {
                                 fillColor: '#a0c8f0',
                                 weight: 2,
@@ -580,7 +522,7 @@
                                 fillOpacity: 0.7
                             };
                             break;
-                        case '4':
+                        case '':
                             return {
                                 fillColor: '#FCF3CF ',
                                 weight: 2,
